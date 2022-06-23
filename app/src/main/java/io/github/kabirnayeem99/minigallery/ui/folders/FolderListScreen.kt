@@ -17,7 +17,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.kabirnayeem99.minigallery.domain.entity.ImageFolder
 import io.github.kabirnayeem99.minigallery.ui.common.PageTransitionAnimation
-import timber.log.Timber
+import io.github.kabirnayeem99.minigallery.ui.destinations.FolderImageListScreenDestination
 
 
 @RootNavGraph(true)
@@ -34,14 +34,13 @@ fun FolderListScreen(
 
     val uiState = folderViewModel.uiState
 
-    FolderListScreenContent(uiState = uiState)
-
+    FolderListScreenContent(uiState = uiState, navigator = navigator)
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FolderListScreenContent(uiState: FolderUiState) {
+private fun FolderListScreenContent(uiState: FolderUiState, navigator: DestinationsNavigator) {
     Scaffold {
         it.toString()
         Column(
@@ -52,23 +51,40 @@ private fun FolderListScreenContent(uiState: FolderUiState) {
 
             FolderLoadingIndicator(isLoading = uiState.isLoading)
 
-            LazyStaggeredGrid(
+            FolderGridList(
                 modifier = Modifier.padding(8.dp),
-                cells = StaggeredCells.Adaptive(minSize = 180.dp)
-            ) {
-                items(uiState.folderList) { folder ->
-                    FolderItem(
-                        folder = folder,
-                        onFolderClick = {
-                            navigateToFolderPictureListScreen(folder)
-                        },
+                folderList = uiState.folderList,
+                onFolderItemClick = { folder ->
+                    navigator.navigate(
+                        FolderImageListScreenDestination(
+                            folder.path,
+                            folder.folderName
+                        )
                     )
                 }
-            }
+            )
         }
     }
 }
 
-private fun navigateToFolderPictureListScreen(folder: ImageFolder) {
-    Timber.d("navigateToFolderPictureListScreen: $folder ")
+@Composable
+private fun FolderGridList(
+    modifier: Modifier = Modifier,
+    folderList: List<ImageFolder> = emptyList(),
+    onFolderItemClick: (ImageFolder) -> Unit = {}
+) {
+    LazyStaggeredGrid(
+        modifier = modifier,
+        cells = StaggeredCells.Adaptive(minSize = 180.dp)
+    ) {
+        items(folderList) { folder ->
+            FolderItem(
+                folder = folder,
+                onFolderClick = {
+                    onFolderItemClick(folder)
+                },
+            )
+        }
+    }
 }
+

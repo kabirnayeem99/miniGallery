@@ -3,7 +3,9 @@ package io.github.kabirnayeem99.minigallery.ui.folders
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -34,27 +36,64 @@ fun FolderItem(folder: ImageFolder, onFolderClick: () -> Unit) {
             contentScale = ContentScale.Crop,
         )
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(bottom = 12.dp, start = 8.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primaryContainer),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 2.dp)
-                    .align(Alignment.Center),
-                text = folder.folderName,
-                style = MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    textAlign = TextAlign.Start,
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+        FolderItemCounter(
+            modifier = Modifier.align(Alignment.TopEnd),
+            numberOfPictures = folder.numberOfPictures.toString(),
+        )
 
-                )
-        }
+        FolderName(
+            modifier = Modifier.Companion.align(Alignment.BottomStart),
+            folderName = folder.folderName
+        )
+    }
+}
+
+@Composable
+private fun FolderName(modifier: Modifier = Modifier, folderName: String) {
+    Box(
+        modifier = modifier
+            .padding(bottom = 12.dp, start = 8.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.primaryContainer),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 2.dp)
+                .align(Alignment.Center),
+            text = folderName,
+            style = MaterialTheme.typography.labelLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                textAlign = TextAlign.Start,
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+
+            )
+    }
+}
+
+@Composable
+private fun FolderItemCounter(modifier: Modifier = Modifier, numberOfPictures: String) {
+    Box(
+        modifier = modifier
+            .padding(top = 12.dp, end = 8.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.tertiaryContainer),
+    ) {
+        Text(
+            modifier = Modifier
+                .height(22.dp)
+                .width(22.dp)
+                .align(Alignment.Center),
+            text = numberOfPictures,
+            style = MaterialTheme.typography.labelLarge.copy(
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                textAlign = TextAlign.Center,
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+
+            )
     }
 }

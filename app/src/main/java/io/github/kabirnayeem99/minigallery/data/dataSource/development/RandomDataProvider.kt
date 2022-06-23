@@ -3,6 +3,7 @@ package io.github.kabirnayeem99.minigallery.data.dataSource.development
 import io.github.kabirnayeem99.minigallery.BuildConfig
 import io.github.kabirnayeem99.minigallery.domain.entity.ImageFolder
 import io.github.serpro69.kfaker.faker
+import kotlinx.coroutines.delay
 
 /**
  * Random Data Provider object to provide demo data before implementing real API
@@ -18,43 +19,93 @@ object RandomDataProvider {
      *
      * @return A list of ImageFolder objects
      */
-    fun provideRandomImageFolders(): List<ImageFolder> {
+    suspend fun provideRandomImageFolders(): List<ImageFolder> {
+
         return if (BuildConfig.DEBUG) {
+            delay(faker.random.nextLong(1000))
             listOf(
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(12),
                     getRandomImageUrl(),
                 ),
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(12),
                     getRandomImageUrl(),
                 ),
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(12),
                     getRandomImageUrl(),
                 ),
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(12),
                     getRandomImageUrl(),
                 ),
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(12),
                     getRandomImageUrl(),
                 ),
                 ImageFolder(
                     "",
                     faker.artist.names(),
-                    faker.random.nextInt(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
+                    getRandomImageUrl(),
+                ),
+                ImageFolder(
+                    "",
+                    faker.artist.names(),
+                    faker.random.nextInt(10),
                     getRandomImageUrl(),
                 ),
 

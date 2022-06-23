@@ -6,14 +6,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.kabirnayeem99.minigallery.data.dataSource.development.RandomDataProvider
+import io.github.kabirnayeem99.minigallery.domain.entity.Resource
+import io.github.kabirnayeem99.minigallery.domain.useCase.GetFolderWithImagesListUseCase
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class FolderViewModel @Inject constructor() : ViewModel() {
+class FolderViewModel @Inject constructor(
+    private val getFolderWithImagesListUseCase: GetFolderWithImagesListUseCase
+) : ViewModel() {
 
     var uiState by mutableStateOf(FolderUiState())
         private set
@@ -28,9 +31,21 @@ class FolderViewModel @Inject constructor() : ViewModel() {
         fetchFolderListJob?.cancel()
         fetchFolderListJob = viewModelScope.launch {
             toggleLoading(true)
-            delay(600)
-            uiState = uiState.copy(folderList = RandomDataProvider.provideRandomImageFolders())
-            toggleLoading(false)
+            val folderListResFlow = getFolderWithImagesListUseCase()
+
+            folderListResFlow.collect { folderListRes ->
+                toggleLoading(false)
+                when (folderListRes) {
+                    is Resource.Success -> {
+                        uiState = uiState.copy(folderList = folderListRes.data ?: emptyList())
+                    }
+                    is Resource.Error -> {
+                        Timber.e("Got an error. For now do nothing.")
+                    }
+                    else -> Unit
+                }
+            }
+
         }
     }
 

@@ -10,7 +10,6 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
-import io.github.kabirnayeem99.minigallery.ui.folders.NavGraphs
 import io.github.kabirnayeem99.minigallery.ui.theme.MiniGalleryTheme
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
