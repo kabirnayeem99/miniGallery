@@ -1,10 +1,7 @@
 package io.github.kabirnayeem99.minigallery.ui.common
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,11 +16,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TopAppBarWithNavigation(
-    startIcon: ImageVector,
-    startIconContentDescriptor: String,
-    endIcon: ImageVector,
-    endIconContentDescriptor: String,
-    titleText: String,
+    startIcon: ImageVector? = null,
+    startIconContentDescriptor: String? = null,
+    endIcon: ImageVector? = null,
+    endIconContentDescriptor: String? = null,
+    titleText: String = "",
     startIconClickListener: () -> Unit = {},
     endIconClickListener: () -> Unit = {},
 ) {
@@ -36,11 +33,13 @@ fun TopAppBarWithNavigation(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(
-                imageVector = startIcon,
-                startIconContentDescriptor,
-                modifier = Modifier.clickable { startIconClickListener() },
-            )
+            if (startIcon != null)
+                Icon(
+                    imageVector = startIcon,
+                    startIconContentDescriptor,
+                    modifier = Modifier.clickable { startIconClickListener() },
+                )
+            else Box(modifier = Modifier)
             Text(
                 text = titleText,
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -48,11 +47,14 @@ fun TopAppBarWithNavigation(
                     textAlign = TextAlign.Center,
                 )
             )
-            Icon(
-                imageVector = endIcon, endIconContentDescriptor,
-                modifier = Modifier.clickable { endIconClickListener() },
-
+            if (endIcon != null)
+                Icon(
+                    imageVector = endIcon,
+                    endIconContentDescriptor,
+                    modifier = Modifier.clickable { endIconClickListener() },
                 )
+            else Box(modifier = Modifier)
+
         }
 
     }

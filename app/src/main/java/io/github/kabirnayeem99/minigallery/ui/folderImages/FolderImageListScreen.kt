@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -53,8 +52,6 @@ private fun FolderImageListContent(
             TopAppBarWithNavigation(
                 startIcon = Icons.Outlined.ArrowBack,
                 startIconContentDescriptor = stringResource(id = R.string.content_desc_back),
-                endIcon = Icons.Outlined.Share,
-                endIconContentDescriptor = stringResource(id = R.string.content_desc_share),
                 titleText = folderName,
                 startIconClickListener = {
                     navigator.navigateUp()

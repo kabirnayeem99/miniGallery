@@ -23,6 +23,11 @@ class FolderImageListViewModel @Inject constructor(
 
     private var fetchImagesJob: Job? = null
 
+    /**
+     * Fetches images from a folder and updates the UI state with the result
+     *
+     * @param folderPath The path of the folder to fetch images from.
+     */
     fun fetchImagesByFolder(folderPath: String) {
         fetchImagesJob?.cancel()
         fetchImagesJob = viewModelScope.launch {
