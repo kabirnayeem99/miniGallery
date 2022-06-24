@@ -119,6 +119,7 @@ class MediaDataSource @Inject constructor(context: Context) {
             MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.DISPLAY_NAME,
             MediaStore.Images.Media.SIZE
         )
+
         val cursor = contentResolver.query(
             allVideosUri,
             projection,
@@ -133,17 +134,17 @@ class MediaDataSource @Inject constructor(context: Context) {
 
                 val image = Image()
 
-//                val imageName = cursor?.let { c ->
-//                    c.getString(c.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
-//                } ?: ""
-//
+                val imageName = cursor?.let { c ->
+                    c.getString(c.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+                } ?: ""
+
                 val imagePath = cursor?.let { c ->
                     c.getString(c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                 } ?: ""
 
                 val imageSize = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE) ?: 0
 
-                image.name = ""
+                image.name = imageName
                 image.path = imagePath
                 image.size = imageSize
 

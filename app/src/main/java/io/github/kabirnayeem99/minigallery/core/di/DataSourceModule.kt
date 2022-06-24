@@ -1,6 +1,5 @@
 package io.github.kabirnayeem99.minigallery.core.di
 
-import android.content.ContentResolver
 import android.content.Context
 import dagger.Module
 import dagger.Provides

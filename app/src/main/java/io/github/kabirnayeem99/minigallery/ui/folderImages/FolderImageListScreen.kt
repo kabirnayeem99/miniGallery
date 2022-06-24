@@ -20,6 +20,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.kabirnayeem99.minigallery.R
 import io.github.kabirnayeem99.minigallery.ui.common.PageTransitionAnimation
 import io.github.kabirnayeem99.minigallery.ui.common.TopAppBarWithNavigation
+import io.github.kabirnayeem99.minigallery.ui.destinations.ImageViewScreenDestination
 import timber.log.Timber
 
 @Destination(style = PageTransitionAnimation::class)
@@ -45,7 +46,7 @@ fun FolderImageListScreen(
 private fun FolderImageListContent(
     folderName: String,
     navigator: DestinationsNavigator,
-    uiState: FolderImageUiState
+    uiState: FolderImageUiState,
 ) {
     Scaffold(
         topBar = {
@@ -76,7 +77,9 @@ private fun FolderImageListContent(
             ) {
                 items(imageList.size) { index ->
                     val image = imageList[index]
-                    FolderImageItem(image = image)
+                    FolderImageItem(image = image) {
+                        navigator.navigate(ImageViewScreenDestination(image.name, image.path))
+                    }
                 }
             }
             Timber.d(uiState.imageList.toString())

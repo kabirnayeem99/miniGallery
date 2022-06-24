@@ -1,5 +1,6 @@
 package io.github.kabirnayeem99.minigallery.ui.folderImages
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -13,13 +14,17 @@ import com.skydoves.landscapist.glide.GlideImage
 import io.github.kabirnayeem99.minigallery.domain.entity.Image
 
 @Composable
-fun FolderImageItem(modifier: Modifier = Modifier, image: Image) {
+fun FolderImageItem(
+    modifier: Modifier = Modifier, image: Image,
+    onImageClick: () -> Unit = {}
+) {
     GlideImage(
         modifier = modifier
             .height(180.dp)
             .width(180.dp)
             .padding(2.dp)
-            .clip(RoundedCornerShape(12.dp)),
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { onImageClick() },
         imageModel = image.path,
         contentScale = ContentScale.Crop,
     )
