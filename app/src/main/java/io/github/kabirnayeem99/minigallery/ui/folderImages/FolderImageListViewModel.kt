@@ -33,14 +33,28 @@ class FolderImageListViewModel @Inject constructor(
                 when (res) {
                     is Resource.Success -> {
                         uiState = uiState.copy(imageList = res.data ?: emptyList())
+                        toggleLoading(false)
                     }
                     is Resource.Error -> {
+                        toggleLoading(false)
                         Timber.e("Got error -> ${res.message}")
                     }
-                    else -> Unit
+                    is Resource.Loading -> {
+                        toggleLoading(true)
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Toggles loading indicator on or off
+     *
+     * @param shouldTurnOn Boolean - This is a boolean value that determines whether the loading
+     * indicator should be shown or not.
+     */
+    private fun toggleLoading(shouldTurnOn: Boolean) {
+        uiState = uiState.copy(isLoading = shouldTurnOn)
     }
 
 }

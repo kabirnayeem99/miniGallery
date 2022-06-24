@@ -25,6 +25,7 @@ import io.github.kabirnayeem99.minigallery.domain.entity.ImageFolder
 fun FolderItem(folder: ImageFolder, onFolderClick: () -> Unit) {
     Box(
         modifier = Modifier
+            .height(180.dp)
             .padding(4.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onFolderClick() },

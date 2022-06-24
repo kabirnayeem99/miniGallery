@@ -34,15 +34,18 @@ class FolderViewModel @Inject constructor(
             val folderListResFlow = getFolderWithImagesListUseCase()
 
             folderListResFlow.collect { folderListRes ->
-                toggleLoading(false)
                 when (folderListRes) {
                     is Resource.Success -> {
                         uiState = uiState.copy(folderList = folderListRes.data ?: emptyList())
+                        toggleLoading(false)
                     }
                     is Resource.Error -> {
                         Timber.e("Got an error. For now do nothing.")
+                        toggleLoading(false)
                     }
-                    else -> Unit
+                    is Resource.Loading -> {
+                        toggleLoading(true)
+                    }
                 }
             }
 

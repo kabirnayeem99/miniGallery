@@ -1,23 +1,28 @@
 package io.github.kabirnayeem99.minigallery.ui.folderImages
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.nesyou.staggeredgrid.LazyStaggeredGrid
-import com.nesyou.staggeredgrid.StaggeredCells
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.skydoves.landscapist.glide.GlideImage
+import io.github.kabirnayeem99.minigallery.R
 import io.github.kabirnayeem99.minigallery.ui.common.PageTransitionAnimation
+import io.github.kabirnayeem99.minigallery.ui.common.TopAppBarWithNavigation
 import timber.log.Timber
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Destination(style = PageTransitionAnimation::class)
 @Composable
 fun FolderImageListScreen(
@@ -33,21 +38,51 @@ fun FolderImageListScreen(
 
     val uiState = folderImageListViewModel.uiState
 
-    Scaffold(modifier = Modifier.fillMaxSize()) {
+    FolderImageListContent(folderName, navigator, uiState)
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FolderImageListContent(
+    folderName: String,
+    navigator: DestinationsNavigator,
+    uiState: FolderImageUiState
+) {
+    Scaffold(
+        topBar = {
+            TopAppBarWithNavigation(
+                startIcon = Icons.Outlined.ArrowBack,
+                startIconContentDescriptor = stringResource(id = R.string.content_desc_back),
+                endIcon = Icons.Outlined.Share,
+                endIconContentDescriptor = stringResource(id = R.string.content_desc_share),
+                titleText = folderName,
+                startIconClickListener = {
+                    navigator.navigateUp()
+                },
+                endIconClickListener = {
+                    Timber.d("Clicked on share button.")
+                }
+            )
+        },
+    ) {
+
         it.toString()
 
-        val imageList = uiState.imageList
+        Column {
 
-        LazyStaggeredGrid(
-            cells = StaggeredCells.Adaptive(minSize = 180.dp)
-        ) {
-            items(imageList) { image ->
-                GlideImage(
-                    imageModel = image.path,
-                    contentScale = ContentScale.Crop,
-                )
+            val imageList = uiState.imageList
+
+            LazyVerticalGrid(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                columns = GridCells.Adaptive(minSize = 180.dp),
+                contentPadding = PaddingValues(top = 72.dp, bottom = 22.dp)
+            ) {
+                items(imageList.size) { index ->
+                    val image = imageList[index]
+                    FolderImageItem(image = image)
+                }
             }
+            Timber.d(uiState.imageList.toString())
         }
-        Timber.d(uiState.imageList.toString())
     }
 }
