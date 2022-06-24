@@ -21,6 +21,11 @@ fun MinGalleryRoot() {
 
         SideEffect {
             systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = shouldUseDarkIcon)
+            systemUiController.setNavigationBarColor(
+                Color.Transparent,
+                darkIcons = shouldUseDarkIcon
+            )
+            systemUiController.setStatusBarColor(Color.Transparent, darkIcons = shouldUseDarkIcon)
         }
 
         val navController = rememberAnimatedNavController()
