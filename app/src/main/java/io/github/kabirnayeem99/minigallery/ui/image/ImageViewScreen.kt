@@ -45,13 +45,13 @@ fun ImageViewScreen(imageName: String, imagePath: String, navigator: Destination
             exit = slideOutVertically() + fadeOut(),
         ) {
             TopAppBarWithNavigation(
-                startIcon = Icons.Outlined.ArrowBack,
-                startIconContentDescriptor = stringResource(id = R.string.content_desc_back),
+                navigationIcon = Icons.Outlined.ArrowBack,
+                navigationIconContentDescriptor = stringResource(id = R.string.content_desc_back),
                 titleText = imageName,
-                startIconClickListener = {
+                navigationIconClickListener = {
                     navigator.navigateUp()
                 },
-                endIconClickListener = {
+                menuIconClickListener = {
                     Timber.d("Clicked on share button.")
                 }
             )

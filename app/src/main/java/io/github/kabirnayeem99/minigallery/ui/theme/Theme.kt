@@ -93,5 +93,6 @@ fun MiniGalleryTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = content,
+        shapes = shapes
     )
 }

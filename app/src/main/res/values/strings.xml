@@ -5,4 +5,14 @@
     <string name="content_desc_info">Learn about this app</string>
     <string name="content_desc_back">Go back to previous screen</string>
     <string name="content_desc_share">Share this picture</string>
+    <string name="label_pictures">Pictures</string>
+    <string name="label_folders">Folders</string>
+    <string name="menu_title_select_all">Select All</string>
+    <string name="menu_title_settings">Settings</string>
+    <string name="menu_title_bin">Bin</string>
+    <string name="label_bin">Bin</string>
+    <string name="menu_title_favourite">Favourite</string>
+    <string name="menu_title_email">Email</string>
+    <string name="menu_title_send_feedback">Send Feedback</string>
+    <string name="label_favourite">Favourites</string>
 </resources>

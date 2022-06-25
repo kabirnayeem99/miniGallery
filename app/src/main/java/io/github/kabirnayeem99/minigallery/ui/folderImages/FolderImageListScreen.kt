@@ -51,13 +51,13 @@ private fun FolderImageListContent(
     Scaffold(
         topBar = {
             TopAppBarWithNavigation(
-                startIcon = Icons.Outlined.ArrowBack,
-                startIconContentDescriptor = stringResource(id = R.string.content_desc_back),
+                navigationIcon = Icons.Outlined.ArrowBack,
+                navigationIconContentDescriptor = stringResource(id = R.string.content_desc_back),
                 titleText = folderName,
-                startIconClickListener = {
+                navigationIconClickListener = {
                     navigator.navigateUp()
                 },
-                endIconClickListener = {
+                menuIconClickListener = {
                     Timber.d("Clicked on share button.")
                 }
             )
@@ -66,7 +66,7 @@ private fun FolderImageListContent(
 
         it.toString()
 
-        Column {
+        Column(modifier = Modifier.padding(top = 12.dp)) {
 
             val imageList = uiState.imageList
 

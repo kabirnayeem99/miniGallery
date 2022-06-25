@@ -5,8 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.kabirnayeem99.minigallery.data.dataSource.local.MediaDataSource
+import io.github.kabirnayeem99.minigallery.data.repositories.AllImageRepositoryImpl
 import io.github.kabirnayeem99.minigallery.data.repositories.FolderImageRepositoryImpl
 import io.github.kabirnayeem99.minigallery.data.repositories.FolderRepositoryImpl
+import io.github.kabirnayeem99.minigallery.domain.repositories.AllImageRepository
 import io.github.kabirnayeem99.minigallery.domain.repositories.FolderImageRepository
 import io.github.kabirnayeem99.minigallery.domain.repositories.FolderRepository
 import javax.inject.Singleton
@@ -26,5 +28,11 @@ object RepositoryModule {
     @Provides
     fun provideFolderImageRepository(dataSource: MediaDataSource): FolderImageRepository {
         return FolderImageRepositoryImpl(dataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAllImageRepository(dataSource: MediaDataSource): AllImageRepository {
+        return AllImageRepositoryImpl(dataSource)
     }
 }

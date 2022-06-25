@@ -56,11 +56,10 @@ class MediaDataSource @Inject constructor(context: Context) {
                     it.getString(it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                 } ?: ""
 
+
+
                 Timber.d("$displayName, $bucketName, $dataPath")
 
-//                var folderPaths = dataPath.replace(displayName, "")
-//
-//                folderPaths = if (folderPaths.isNotBlank()) "$folderPaths$bucketName/" else ""
 
                 var folderPaths: String = dataPath.substring(
                     0, dataPath.lastIndexOf(

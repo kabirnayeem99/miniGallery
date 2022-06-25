@@ -1,68 +1,142 @@
 package io.github.kabirnayeem99.minigallery.ui.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.TopAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import io.github.kabirnayeem99.minigallery.R
+import io.github.kabirnayeem99.minigallery.ui.folders.MenuItem
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun TopAppBarWithNavigation(
-    startIcon: ImageVector? = null,
-    startIconContentDescriptor: String? = null,
-    endIcon: ImageVector? = null,
-    endIconContentDescriptor: String? = null,
-    titleText: String = "",
-    startIconClickListener: () -> Unit = {},
-    endIconClickListener: () -> Unit = {},
+    titleText: String? = null,
+    title: (@Composable () -> Unit)? = null,
+    navigationIcon: ImageVector? = null,
+    navigationIconContentDescriptor: String? = null,
+    navigationIconClickListener: () -> Unit = {},
+    menuIcon: ImageVector? = null,
+    menuIconContentDescriptor: String? = null,
+    menuIconClickListener: (MenuItem) -> Unit = {},
+    menuItems: List<MenuItem> = emptyList(),
 ) {
-    TopAppBar(
-        backgroundColor = MaterialTheme.colorScheme.background.copy(0.2F),
-        elevation = 0.dp,
-        contentPadding = PaddingValues(top = 12.dp, start = 12.dp, end = 12.dp),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (startIcon != null)
-                Icon(
-                    imageVector = startIcon,
-                    startIconContentDescriptor,
-                    modifier = Modifier.clickable { startIconClickListener() },
-                )
-            else Box(modifier = Modifier)
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.W600,
+
+    var shouldDropDownBeEnabled by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+
+    CenterAlignedTopAppBar(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = 12.dp),
+        title = {
+            if (titleText != null && title == null) {
+                Text(
+                    text = titleText,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        fontStyle = FontStyle.Italic,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier.padding(horizontal = 12.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
-            )
-            if (endIcon != null)
+
+                    )
+            }
+
+            if (titleText == null && title != null) title()
+            else Box(modifier = Modifier)
+        },
+        navigationIcon = {
+
+            if (navigationIcon != null)
                 Icon(
-                    imageVector = endIcon,
-                    endIconContentDescriptor,
-                    modifier = Modifier.clickable { endIconClickListener() },
+                    imageVector = navigationIcon,
+                    navigationIconContentDescriptor,
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .clickable { navigationIconClickListener() },
                 )
             else Box(modifier = Modifier)
+        },
+        actions = {
+            if (menuIcon != null) {
+                Icon(
+                    imageVector = menuIcon,
+                    menuIconContentDescriptor,
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .clickable {
+                            scope.launch {
+                                shouldDropDownBeEnabled = true
+                            }
+                        },
+                )
 
-        }
+                DropdownMenu(
+                    expanded = shouldDropDownBeEnabled,
+                    onDismissRequest = { shouldDropDownBeEnabled = false }
+                ) {
 
-    }
+                    menuItems.forEach { item ->
+                        DropdownMenuItem(
+                            text = { Text(item.title) },
+                            onClick = {
+                                scope.launch {
+                                    shouldDropDownBeEnabled = false
+                                    menuIconClickListener(item)
+                                }
+                            },
+                            leadingIcon = {
+                                item.leadingIcon?.let { icon ->
+                                    Icon(
+                                        icon,
+                                        contentDescription = item.title
+                                    )
+                                }
+                            },
+                        )
+                    }
+
+
+                    MenuDefaults.Divider()
+
+                    DropdownMenuItem(
+                        text = { Text(stringResource(id = R.string.menu_title_send_feedback)) },
+                        onClick = { shouldDropDownBeEnabled = false },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Outlined.Email,
+                                contentDescription = null
+                            )
+                        },
+                        trailingIcon = {
+                            Icon(
+                                Icons.Outlined.ArrowForward,
+                                contentDescription = null
+                            )
+                        })
+                }
+            } else Box(modifier = Modifier)
+        },
+    )
 }
