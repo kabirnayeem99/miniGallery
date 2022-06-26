@@ -29,7 +29,8 @@ object DataSourceModule {
         return Room.databaseBuilder(
             context,
             MinGalleryCachingDatabase::class.java, "min_gallery_caching_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

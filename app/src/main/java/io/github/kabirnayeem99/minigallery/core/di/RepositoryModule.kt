@@ -33,7 +33,7 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideAllImageRepository(dataSource: MediaDataSource): AllImageRepository {
-        return AllImageRepositoryImpl(dataSource)
+    fun provideAllImageRepository(dataSource: MediaDataSource, cachingDataSource: CachingDataSource): AllImageRepository {
+        return AllImageRepositoryImpl(dataSource, cachingDataSource)
     }
 }

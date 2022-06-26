@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -235,7 +234,6 @@ class MediaDataSource @Inject constructor(context: Context) {
                     image.name = name
                     image.path = imagePath
                     image.size = (size / 1024).roundToInt()
-                    image.dateModified = Date(imageDateInMillis)
                     image.thumbnail = thumbnail
 
 
@@ -259,10 +257,7 @@ class MediaDataSource @Inject constructor(context: Context) {
             }
 
 
-            images.sortedByDescending {
-                it.dateModified
-            }
-
+            images
         }
     }
 
@@ -341,7 +336,6 @@ class MediaDataSource @Inject constructor(context: Context) {
 
                     image.name = name
                     image.path = imagePath
-                    image.dateModified = Date(imageDateInMillis)
                     image.size = size.roundToInt()
                     image.thumbnail = thumbnail
 
@@ -365,7 +359,7 @@ class MediaDataSource @Inject constructor(context: Context) {
 
             Timber.d("images -> $images")
 
-            images.sortedBy { it.dateModified }
+            images
         }
     }
 

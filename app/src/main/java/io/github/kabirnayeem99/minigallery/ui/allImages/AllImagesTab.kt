@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,10 +25,6 @@ fun AllImagesTab(
     navigator: DestinationsNavigator,
     viewModel: AllImagesViewModel = hiltViewModel()
 ) {
-
-    LaunchedEffect(true) {
-        viewModel.fetchAllImages()
-    }
 
     val uiState = viewModel.uiState
 

@@ -4,15 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.github.kabirnayeem99.minigallery.data.dto.local.ImageFolderEntity
+import io.github.kabirnayeem99.minigallery.data.dto.local.AllImageEntity
 
 @Dao
-interface ImageFolderDao {
-
-    @Query("SELECT * FROM imagefolderentity")
-    suspend fun getAllImageFolders(): List<ImageFolderEntity>
+interface AllImageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(allFolders: List<ImageFolderEntity>)
+    suspend fun insertAllImages(images: List<AllImageEntity>)
 
+
+    @Query("SELECT * FROM AllImageEntity")
+    suspend fun getAllImages(): List<AllImageEntity>
 }

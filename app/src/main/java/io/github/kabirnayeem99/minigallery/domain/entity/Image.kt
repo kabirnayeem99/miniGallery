@@ -1,7 +1,6 @@
 package io.github.kabirnayeem99.minigallery.domain.entity
 
 import android.graphics.Bitmap
-import java.util.*
 
 /**
  * Data class for image.
@@ -19,7 +18,5 @@ data class Image(
     var size: Int = 0,
     var uri: String = "",
     var isSelected: Boolean = false,
-    var dateModified: Date = Date(),
     var thumbnail: Bitmap? = null,
-    var year: Int = Date().year
 )
