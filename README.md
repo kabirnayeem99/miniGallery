@@ -1,6 +1,6 @@
 # miniGallery
 
-Simple overview of use/purpose.
+Minimalist gallery application for Android with Material You design
 
 ## Description
 
