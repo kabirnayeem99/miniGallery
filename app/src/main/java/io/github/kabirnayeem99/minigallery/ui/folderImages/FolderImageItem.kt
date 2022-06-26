@@ -25,7 +25,7 @@ fun FolderImageItem(
             .padding(2.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onImageClick() },
-        imageModel = image.path,
+        imageModel = image.thumbnail,
         contentScale = ContentScale.Crop,
     )
 }

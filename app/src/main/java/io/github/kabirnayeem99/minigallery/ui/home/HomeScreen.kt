@@ -121,6 +121,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         HorizontalPager(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(PaddingValues(bottom = it.calculateBottomPadding()))
                 .background(MaterialTheme.colorScheme.background)
                 .padding(bottom = it.calculateTopPadding()),
             state = pagerState,
@@ -155,7 +156,7 @@ fun BottomBar(pagerState: PagerState) {
                 selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
-                        pagerState.animateScrollToPage(index)
+                        pagerState.scrollToPage(index)
                     }
                 }
             )

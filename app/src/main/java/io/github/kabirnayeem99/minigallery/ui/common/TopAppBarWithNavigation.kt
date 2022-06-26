@@ -23,6 +23,7 @@ import io.github.kabirnayeem99.minigallery.ui.folders.MenuItem
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarWithNavigation(
     titleText: String? = null,
@@ -39,11 +40,11 @@ fun TopAppBarWithNavigation(
     var shouldDropDownBeEnabled by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-
     CenterAlignedTopAppBar(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .padding(top = 12.dp),
+
         title = {
             if (titleText != null && title == null) {
                 Text(

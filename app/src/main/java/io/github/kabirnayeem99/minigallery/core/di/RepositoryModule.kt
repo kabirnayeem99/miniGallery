@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.github.kabirnayeem99.minigallery.data.dataSource.local.CachingDataSource
 import io.github.kabirnayeem99.minigallery.data.dataSource.local.MediaDataSource
 import io.github.kabirnayeem99.minigallery.data.repositories.AllImageRepositoryImpl
 import io.github.kabirnayeem99.minigallery.data.repositories.FolderImageRepositoryImpl
@@ -20,8 +21,8 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideFolderRepository(dataSource: MediaDataSource): FolderRepository {
-        return FolderRepositoryImpl(dataSource)
+    fun provideFolderRepository(dataSource: MediaDataSource, cachingDataSource: CachingDataSource): FolderRepository {
+        return FolderRepositoryImpl(dataSource, cachingDataSource)
     }
 
     @Singleton

@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.kabirnayeem99.minigallery.domain.entity.Resource
 import io.github.kabirnayeem99.minigallery.domain.useCase.GetFolderWithImagesListUseCase
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,33 +22,39 @@ class FolderViewModel @Inject constructor(
     var uiState by mutableStateOf(FolderUiState())
         private set
 
+    init {
+        fetchFolderList()
+    }
 
     private var fetchFolderListJob: Job? = null
 
     /**
      * Fetching all the folders from the device that contains image
      */
-    fun fetchFolderList() {
+    private fun fetchFolderList() {
         fetchFolderListJob?.cancel()
         fetchFolderListJob = viewModelScope.launch {
             toggleLoading(true)
             val folderListResFlow = getFolderWithImagesListUseCase()
 
-            folderListResFlow.collect { folderListRes ->
-                when (folderListRes) {
-                    is Resource.Success -> {
-                        uiState = uiState.copy(folderList = folderListRes.data ?: emptyList())
-                        toggleLoading(false)
-                    }
-                    is Resource.Error -> {
-                        Timber.e("Got an error. For now do nothing.")
-                        toggleLoading(false)
-                    }
-                    is Resource.Loading -> {
-                        toggleLoading(true)
+            folderListResFlow
+                .distinctUntilChanged()
+                .collect { folderListRes ->
+                    when (folderListRes) {
+                        is Resource.Success -> {
+
+                            uiState = uiState.copy(folderList = folderListRes.data ?: emptyList())
+                            toggleLoading(false)
+                        }
+                        is Resource.Error -> {
+                            Timber.e("Got an error. For now do nothing.")
+                            toggleLoading(false)
+                        }
+                        is Resource.Loading -> {
+                            toggleLoading(true)
+                        }
                     }
                 }
-            }
 
         }
     }

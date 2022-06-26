@@ -32,10 +32,6 @@ fun FolderListTab(
     folderViewModel: FolderViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(true) {
-        folderViewModel.fetchFolderList()
-    }
-
     val uiState = folderViewModel.uiState
 
     Scaffold {

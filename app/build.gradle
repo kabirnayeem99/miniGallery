@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.kabirnayeem99.minigallery"
-        minSdk 23
+        minSdk 30
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -130,6 +130,16 @@ dependencies {
 
     // LazyStaggeredGrid - to show staggered view in jetpack compose
     implementation 'com.github.nesyou01:LazyStaggeredGrid:1.2.0'
+
+    // Room - for caching
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // GSON - for JSON handling
+    implementation 'com.google.code.gson:gson:2.9.0'
+
 
 }
 

@@ -10,45 +10,8 @@ class AllImageRepositoryImpl(private val dataSource: MediaDataSource) : AllImage
 
     override suspend fun getAllImages(): Flow<List<Image>> {
         return flow {
-
-            val imageList = listOf(
-                Image(
-                    name = "IMG_20220624_123939_1.jpg",
-                    path = "/storage/emulated/0/Pictures/IMG_20220624_123939_1.jpg",
-                    size = 2,
-                    uri = "",
-                    isSelected = false
-                ),
-                Image(
-                    name = "IMG_20220624_123939_1.jpg",
-                    path = "/storage/emulated/0/Pictures/IMG_20220624_123939_1.jpg",
-                    size = 2,
-                    uri = "",
-                    isSelected = false
-                ),
-                Image(
-                    name = "IMG_20220624_123939_1.jpg",
-                    path = "/storage/emulated/0/Pictures/IMG_20220624_123939_1.jpg",
-                    size = 2,
-                    uri = "",
-                    isSelected = false
-                ),
-                Image(
-                    name = "IMG_20220624_123939_1.jpg",
-                    path = "/storage/emulated/0/Pictures/IMG_20220624_123939_1.jpg",
-                    size = 2,
-                    uri = "",
-                    isSelected = false
-                ),
-                Image(
-                    name = "IMG_20220624_123939_1.jpg",
-                    path = "/storage/emulated/0/Pictures/IMG_20220624_123939_1.jpg",
-                    size = 2,
-                    uri = "",
-                    isSelected = false
-                ),
-            )
-            emit(imageList)
+            val list = dataSource.getAllImages()
+            emit(list)
         }
     }
 }
