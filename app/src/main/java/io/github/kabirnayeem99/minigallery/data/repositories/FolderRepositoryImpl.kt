@@ -32,12 +32,17 @@ class FolderRepositoryImpl @Inject constructor(
         val cachedFolderList = getCachedInMemoryFolderList()
         return flow {
             val localFolderList = getCachedFolderList()
-            emit(localFolderList)
+            if (cachedFolderList.size != localFolderList.size)
+                emit(localFolderList)
+
             val folderList = dataSource.getFolderWithPicturesFromTheDevice()
-            cacheFolderList(folderList)
-            emit(folderList)
+            if (localFolderList.size != folderList.size) {
+                cacheFolderList(folderList)
+                emit(folderList)
+            }
         }.onStart {
-            emit(cachedFolderList)
+            if (cachedFolderList.isNotEmpty())
+                emit(cachedFolderList)
         }.flowOn(Dispatchers.IO)
     }
 
